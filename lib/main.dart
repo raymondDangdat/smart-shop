@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (ctx) =>  ProductProviders(),
+      create: (ctx) => ProductProviders(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Smart Shop',

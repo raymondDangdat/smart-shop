@@ -39,7 +39,6 @@ class ProductProviders with ChangeNotifier {
 
   // var _showFavoritesOnly = false;
 
-
   List<Product> get items {
     // if(_showFavoritesOnly){
     //   return _items.where((prodItem) => prodItem.isFavorite).toList();
@@ -47,7 +46,7 @@ class ProductProviders with ChangeNotifier {
     return [..._items];
   }
 
-  List<Product> get favouriteItems{
+  List<Product> get favouriteItems {
     return _items.where((prodItem) => prodItem.isFavorite).toList();
   }
 
