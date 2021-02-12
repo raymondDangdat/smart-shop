@@ -12,25 +12,42 @@ class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10.0),
-      child: GridTile(
+        borderRadius: BorderRadius.circular(10.0),
+        child: GridTile(
           child: InkWell(
-            onTap: (){
-              Navigator.pushNamed(context, ProductDetailScreen.routeName, arguments: id);
+            onTap: () {
+              Navigator.pushNamed(context, ProductDetailScreen.routeName,
+                  arguments: id);
             },
             child: Image.network(
-        imageUrl,
-        fit: BoxFit.cover,
-      ),
+              imageUrl,
+              fit: BoxFit.cover,
+            ),
           ),
-      footer: GridTileBar(
-        leading: IconButton(icon: Icon(Icons.favorite), onPressed: (){}, color: Theme.of(context).accentColor,),
-        trailing: IconButton(icon: Icon(Icons.shopping_cart), onPressed: (){}, color: Theme.of(context).accentColor,),
-        backgroundColor: Colors.black87,
-        title: Text('₦ $price', textAlign: TextAlign.center, style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),),),
-      header: GridTileBar(
-    title: Text(title, textAlign: TextAlign.center,),),
-    )
-    );
+          footer: GridTileBar(
+            leading: IconButton(
+              icon: Icon(Icons.favorite),
+              onPressed: () {},
+              color: Theme.of(context).accentColor,
+            ),
+            trailing: IconButton(
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {},
+              color: Theme.of(context).accentColor,
+            ),
+            backgroundColor: Colors.black87,
+            title: Text(
+              '₦ $price',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 10.0, fontWeight: FontWeight.bold),
+            ),
+          ),
+          header: GridTileBar(
+            title: Text(
+              title,
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ));
   }
 }
