@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop/screens/product_overview.dart';
+
 class ProductDetailScreen extends StatelessWidget {
   // final String title;
   // final double price;
