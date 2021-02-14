@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './edit_product.dart';
 import '../providers/products_providers.dart';
 import '../widgets/main_drawer.dart';
 
-import '../providers/products_providers.dart';
 import '../widgets/user_product_item.dart';
 
 class UserProducts extends StatelessWidget {
@@ -15,7 +15,13 @@ class UserProducts extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Your Products'),
         centerTitle: true,
-        actions: [IconButton(icon: const Icon(Icons.add), onPressed: () {})],
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () {
+                Navigator.of(context).pushNamed(EditProduct.routeName);
+              })
+        ],
       ),
       drawer: MainDrawer(),
       body: Padding(
@@ -27,6 +33,7 @@ class UserProducts extends StatelessWidget {
                     UserProductItem(
                       title: productData.items[index].title,
                       imageUrl: productData.items[index].imageUrl,
+                      id: productData.items[index].id,
                     ),
                     Divider(),
                   ],
