@@ -176,8 +176,32 @@ class ProductProviders with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  void addProduct() {
+  void addProduct(Product product) {
+    final newProduct = Product(
+        id: DateTime.now().toString(),
+        title: product.title,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl);
+    _items.add(newProduct);
+    // _items.insert(0, newProduct);
     // _items.add(value);
+    notifyListeners();
+  }
+
+  void updateProduct(String id, Product updatedProduct) {
+    final prodIndex = _items.indexWhere((prod) => prod.id == id);
+    //Check to see if the product exists before updating it
+    if (prodIndex >= 0) {
+      _items[prodIndex] = updatedProduct;
+      notifyListeners();
+    } else {
+      print('Problem...');
+    }
+  }
+
+  void deleteProduct(String id) {
+    _items.removeWhere((prod) => prod.id == id);
     notifyListeners();
   }
 }
