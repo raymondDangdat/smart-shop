@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "301184149337",
+    "firebase_url": "https://ufosa-6c90e.firebaseio.com",
+    "project_id": "ufosa-6c90e",
+    "storage_bucket": "ufosa-6c90e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301184149337:android:ceb6c39284920757d84e48",
+        "android_client_info": {
+          "package_name": "com.raymond.raaxo.smart_chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfCfthSxAKcXiioCP0VyIpUvALvFDbNJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301184149337:android:14097e188b4aaa35d84e48",
+        "android_client_info": {
+          "package_name": "com.raymond.raaxo.ufosa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfCfthSxAKcXiioCP0VyIpUvALvFDbNJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:301184149337:android:eb9b0596ba145970d84e48",
+        "android_client_info": {
+          "package_name": "com.shop.shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfCfthSxAKcXiioCP0VyIpUvALvFDbNJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "301184149337-m00hs213gjkk0j5p0ai5c4d3k7i1qkus.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
