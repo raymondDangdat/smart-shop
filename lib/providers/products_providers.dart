@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shop/models/http_exception.dart';
 import './product.dart';
 
 class ProductProviders with ChangeNotifier {
@@ -256,20 +257,20 @@ class ProductProviders with ChangeNotifier {
     }
   }
 
-  void deleteProduct(String id) async{
+  Future<void> deleteProduct(String id) async{
     final url = 'https://ufosa-6c90e.firebaseio.com/ecommrce/products/$id.json';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
+
     _items.removeAt(existingProductIndex);
     notifyListeners();
-    http.delete(url).then((response){
+     final response = await http.delete(url);
       if(response.statusCode >= 400){
-        throw Exception();
+        _items.insert(existingProductIndex, existingProduct);
+        notifyListeners();
+        throw HttpExceptions('Could not delete product');
       }
       existingProduct = null;
-    }).catchError((_){
-      _items.insert(existingProductIndex, existingProduct);
-      notifyListeners();
-    });
+
   }
 }
