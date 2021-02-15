@@ -1,4 +1,4 @@
-class HttpExceptions implements Exception{
+class HttpExceptions implements Exception {
   final String message;
   HttpExceptions(this.message);
 

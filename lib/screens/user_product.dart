@@ -9,9 +9,11 @@ import '../widgets/user_product_item.dart';
 class UserProducts extends StatelessWidget {
   static const routeName = '/user-product';
 
-  Future<void> _refreshProducts(BuildContext context) async{
-    await Provider.of<ProductProviders>(context, listen: false).fetchAndSetProducts();
+  Future<void> _refreshProducts(BuildContext context) async {
+    await Provider.of<ProductProviders>(context, listen: false)
+        .fetchAndSetProducts();
   }
+
   @override
   Widget build(BuildContext context) {
     final productData = Provider.of<ProductProviders>(context);

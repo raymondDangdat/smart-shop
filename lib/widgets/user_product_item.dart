@@ -33,12 +33,16 @@ class UserProductItem extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.delete),
-              onPressed: () async{
-                try{
-                  await  Provider.of<ProductProviders>(context, listen: false)
+              onPressed: () async {
+                try {
+                  await Provider.of<ProductProviders>(context, listen: false)
                       .deleteProduct(id);
-                }catch (error){
-                  scaffold.showSnackBar(SnackBar(content: Text("Failed to delete!", textAlign: TextAlign.center,)));
+                } catch (error) {
+                  scaffold.showSnackBar(SnackBar(
+                      content: Text(
+                    "Failed to delete!",
+                    textAlign: TextAlign.center,
+                  )));
                 }
               },
               splashColor: Theme.of(context).accentColor,

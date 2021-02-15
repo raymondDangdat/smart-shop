@@ -98,7 +98,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         centerTitle: true,
       ),
       drawer: MainDrawer(),
-      body: _isLoading ? Center(child: CircularProgressIndicator(),) : ProductsGrid(_showOnlyFavourites),
+      body: _isLoading
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : ProductsGrid(_showOnlyFavourites),
     );
   }
 }
