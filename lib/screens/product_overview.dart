@@ -19,6 +19,39 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   var _showOnlyFavourites = false;
+  var _isInit = true;
+  var _isLoading = false;
+
+  @override
+  void initState() {
+    // Provider.of<ProductProviders>(context).fetchAndSetProducts(); Won't work unless you set listen to false
+
+    /// this will work too but not advisable
+    // Future.delayed(Duration.zero).then((_) {
+    //   Provider.of<ProductProviders>(context).fetchAndSetProducts();
+    // });
+
+    super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<ProductProviders>(context).fetchAndSetProducts().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    setState(() {
+      _isInit = false;
+    });
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     final productsContainer =
@@ -65,7 +98,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         centerTitle: true,
       ),
       drawer: MainDrawer(),
-      body: ProductsGrid(_showOnlyFavourites),
+      body: _isLoading ? Center(child: CircularProgressIndicator(),) : ProductsGrid(_showOnlyFavourites),
     );
   }
 }
