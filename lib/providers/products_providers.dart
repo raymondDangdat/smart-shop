@@ -189,7 +189,7 @@ class ProductProviders with ChangeNotifier {
       final extractedProducts =
           json.decode(response.body) as Map<String, dynamic>;
       final List<Product> loadedProducts = [];
-      if(extractedProducts == null){
+      if (extractedProducts == null) {
         return null;
       }
       extractedProducts.forEach((prodId, prodData) {
