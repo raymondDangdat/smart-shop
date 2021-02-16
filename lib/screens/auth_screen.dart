@@ -103,25 +103,25 @@ class _AuthCardState extends State<AuthCard> {
   var _isLoading = false;
   final _passwordController = TextEditingController();
 
-  void _showErrorDialog(String message) {
+  void _showErrorDialog(String message, context) {
     showDialog(
+        barrierDismissible: false,
         context: context,
-        builder: (ctx) => AlertDialog(
+        builder: (context) => WillPopScope(
+            child: AlertDialog(
               title: Text(
                 'An Error Occurred!',
-                style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.w500),
               ),
               content: Text(message),
               actions: [
                 FlatButton(
                     onPressed: () {
-                      Navigator.of(ctx).pop();
+                      Navigator.of(context).pop();
                     },
                     child: Text('Okay'))
               ],
-            ));
+            ),
+            onWillPop: () async => false));
   }
 
   Future<void> _submit() async {
@@ -141,7 +141,7 @@ class _AuthCardState extends State<AuthCard> {
       } else {
         // Sign user up
         await Provider.of<Auth>(context, listen: false)
-            .signUp(_authData['em.ail'], _authData['password']);
+            .signUp(_authData['email'], _authData['password']);
       }
       Navigator.of(context).pushReplacementNamed('/products-overview');
     } on HttpExceptions catch (error) {
@@ -153,15 +153,15 @@ class _AuthCardState extends State<AuthCard> {
       } else if (error.toString().contains("WEAK_PASSWORD")) {
         errorMessage = 'This password is too weak.';
       } else if (error.toString().contains('EMAIL_NOT_FOUND')) {
-        errorMessage = 'Email taken, login or user a diffrent email.';
+        errorMessage = 'Email taken, login or use a different email.';
       } else if (error.toString().contains('INVALID_PASSWORD')) {
         errorMessage = "Invalid login credentials.";
       }
-      _showErrorDialog(errorMessage);
+      _showErrorDialog(errorMessage, context);
     } catch (error) {
       const errorMessage =
           'Could not authenticate you. Please try again later.';
-      _showErrorDialog(errorMessage);
+      _showErrorDialog(errorMessage, context);
     }
 
     setState(() {

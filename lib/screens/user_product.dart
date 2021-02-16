@@ -11,12 +11,12 @@ class UserProducts extends StatelessWidget {
 
   Future<void> _refreshProducts(BuildContext context) async {
     await Provider.of<ProductProviders>(context, listen: false)
-        .fetchAndSetProducts();
+        .fetchAndSetProducts(true);
   }
 
   @override
   Widget build(BuildContext context) {
-    final productData = Provider.of<ProductProviders>(context);
+    // final productData = Provider.of<ProductProviders>(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('Your Products'),
@@ -30,23 +30,33 @@ class UserProducts extends StatelessWidget {
         ],
       ),
       drawer: MainDrawer(),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context),
-        child: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: ListView.builder(
-              itemCount: productData.items.length,
-              itemBuilder: (_, index) => Column(
-                    children: [
-                      UserProductItem(
-                        title: productData.items[index].title,
-                        imageUrl: productData.items[index].imageUrl,
-                        id: productData.items[index].id,
+      body: FutureBuilder(
+        future: _refreshProducts(context),
+        builder: (ctx, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : RefreshIndicator(
+                    onRefresh: () => _refreshProducts(context),
+                    child: Consumer<ProductProviders>(
+                      builder: (ctx, productData, _) => Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: ListView.builder(
+                            itemCount: productData.items.length,
+                            itemBuilder: (_, index) => Column(
+                                  children: [
+                                    UserProductItem(
+                                      title: productData.items[index].title,
+                                      imageUrl: productData.items[index].imageUrl,
+                                      id: productData.items[index].id,
+                                    ),
+                                    Divider(),
+                                  ],
+                                )),
                       ),
-                      Divider(),
-                    ],
-                  )),
-        ),
+                    ),
+                  ),
       ),
     );
   }

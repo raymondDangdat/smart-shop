@@ -154,6 +154,9 @@ class ProductProviders with ChangeNotifier {
   ];
 
   // var _showFavoritesOnly = false;
+  final String authToken;
+  final String userId;
+  ProductProviders(this.authToken, this.userId, this._items);
 
   List<Product> get items {
     // if(_showFavoritesOnly){
@@ -180,26 +183,35 @@ class ProductProviders with ChangeNotifier {
     return _items.firstWhere((product) => product.id == id);
   }
 
-  Future<void> fetchAndSetProducts() async {
-    const url = 'https://ufosa-6c90e.firebaseio.com/ecommrce/products.json';
-
+  Future<void> fetchAndSetProducts([bool filterByUser = false]) async {
+    final filterString =
+        filterByUser ? 'orderBy="creatorId"&equalTo="$userId"' : '';
+    var url =
+        'https://ufosa-6c90e.firebaseio.com/ecommrce/products.json?auth=$authToken&$filterString';
     try {
       final response = await http.get(url);
       // print(json.decode(response.body));
       final extractedProducts =
           json.decode(response.body) as Map<String, dynamic>;
-      final List<Product> loadedProducts = [];
       if (extractedProducts == null) {
-        return null;
+        return;
       }
+      //fetch favourite status
+      url =
+          'https://ufosa-6c90e.firebaseio.com/ecommrce/userFavourites/$userId.json?auth=$authToken';
+      final favoriteResponse = await http.get(url);
+      final favouriteData = json.decode(favoriteResponse.body);
+      final List<Product> loadedProducts = [];
       extractedProducts.forEach((prodId, prodData) {
         loadedProducts.add(Product(
-            id: prodId,
-            title: prodData['title'],
-            description: prodData['description'],
-            price: prodData['price'],
-            imageUrl: prodData['imageUrl'],
-            isFavorite: prodData['isFavorite']));
+          id: prodId,
+          title: prodData['title'],
+          description: prodData['description'],
+          price: prodData['price'],
+          imageUrl: prodData['imageUrl'],
+          isFavorite:
+              favouriteData == null ? false : favouriteData[prodId] ?? false,
+        ));
       });
       notifyListeners();
       _items = loadedProducts;
@@ -209,7 +221,8 @@ class ProductProviders with ChangeNotifier {
   }
 
   Future<void> addProduct(Product product) async {
-    const url = 'https://ufosa-6c90e.firebaseio.com/ecommrce/products.json';
+    final url =
+        'https://ufosa-6c90e.firebaseio.com/ecommrce/products.json?auth=$authToken';
     try {
       final response = await http.post(url,
           body: json.encode({
@@ -217,7 +230,7 @@ class ProductProviders with ChangeNotifier {
             'description': product.description,
             'imageUrl': product.imageUrl,
             'price': product.price,
-            'isFavorite': product.isFavorite,
+            'creatorId': userId,
           }));
 
       // print(jsonDecode(response.body));
@@ -236,7 +249,8 @@ class ProductProviders with ChangeNotifier {
   }
 
   Future<void> updateProduct(String id, Product updatedProduct) async {
-    final url = 'https://ufosa-6c90e.firebaseio.com/ecommrce/products/$id.json';
+    final url =
+        'https://ufosa-6c90e.firebaseio.com/ecommrce/products/$id.json?auth=$authToken';
 
     try {
       await http.patch(url,
@@ -261,7 +275,8 @@ class ProductProviders with ChangeNotifier {
   }
 
   Future<void> deleteProduct(String id) async {
-    final url = 'https://ufosa-6c90e.firebaseio.com/ecommrce/products/$id.json';
+    final url =
+        'https://ufosa-6c90e.firebaseio.com/ecommrce/products/$id.json?auth=$authToken';
     final existingProductIndex = _items.indexWhere((prod) => prod.id == id);
     var existingProduct = _items[existingProductIndex];
 
