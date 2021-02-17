@@ -213,10 +213,10 @@ class ProductProviders with ChangeNotifier {
               favouriteData == null ? false : favouriteData[prodId] ?? false,
         ));
       });
-      notifyListeners();
       _items = loadedProducts;
+      notifyListeners();
     } catch (error) {
-      throw error;
+      throw (error);
     }
   }
 

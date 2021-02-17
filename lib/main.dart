@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop/screens/product_overview.dart';
+import './screens/product_overview.dart';
+import './screens/splash_screen.dart';
 import './providers/auth.dart';
 import './screens/edit_product.dart';
 import './providers/orders.dart';
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
             create: (ctx) => Cart(),
           ),
           ChangeNotifierProxyProvider<Auth, Orders>(
-              update: (ctx, auth, previousOrders) => Orders(auth.token, auth.userId,
+              update: (ctx, auth, previousOrders) => Orders(
+                  auth.token,
+                  auth.userId,
                   previousOrders == null ? [] : previousOrders.orders)),
         ],
         child: Consumer<Auth>(
@@ -49,14 +52,22 @@ class MyApp extends StatelessWidget {
                 primarySwatch: Colors.purple,
                 accentColor: Colors.deepOrange,
                 fontFamily: 'Lato'),
-            home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+            home: auth.isAuth
+                ? ProductOverviewScreen()
+                : FutureBuilder(
+                    future: auth.tryAutoLogin(),
+                    builder: (ctx, authResultSnapshot) =>
+                        authResultSnapshot.connectionState ==
+                                ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen()),
             routes: {
               ProductDetailScreen.routeName: (context) => ProductDetailScreen(),
               CartScreen.routeName: (context) => CartScreen(),
               OrderScreen.routeName: (context) => OrderScreen(),
               UserProducts.routeName: (context) => UserProducts(),
               EditProduct.routeName: (context) => EditProduct(),
-              // ProductOverviewScreen.routeName: (context) => ProducProductOverviewScreen(),
+              ProductOverviewScreen.routeName: (context) => ProductOverviewScreen(),
             },
           ),
         ));

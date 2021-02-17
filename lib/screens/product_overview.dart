@@ -47,11 +47,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
         });
       });
     }
-    setState(() {
-      _isInit = false;
-    });
+    _isInit = false;
     super.didChangeDependencies();
   }
+
+
 
   @override
   Widget build(BuildContext context) {

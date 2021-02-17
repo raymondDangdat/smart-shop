@@ -32,31 +32,31 @@ class UserProducts extends StatelessWidget {
       drawer: MainDrawer(),
       body: FutureBuilder(
         future: _refreshProducts(context),
-        builder: (ctx, snapshot) =>
-            snapshot.connectionState == ConnectionState.waiting
-                ? Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : RefreshIndicator(
-                    onRefresh: () => _refreshProducts(context),
-                    child: Consumer<ProductProviders>(
-                      builder: (ctx, productData, _) => Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: ListView.builder(
-                            itemCount: productData.items.length,
-                            itemBuilder: (_, index) => Column(
-                                  children: [
-                                    UserProductItem(
-                                      title: productData.items[index].title,
-                                      imageUrl: productData.items[index].imageUrl,
-                                      id: productData.items[index].id,
-                                    ),
-                                    Divider(),
-                                  ],
-                                )),
-                      ),
-                    ),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () => _refreshProducts(context),
+                child: Consumer<ProductProviders>(
+                  builder: (ctx, productData, _) => Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ListView.builder(
+                        itemCount: productData.items.length,
+                        itemBuilder: (_, index) => Column(
+                              children: [
+                                UserProductItem(
+                                  title: productData.items[index].title,
+                                  imageUrl: productData.items[index].imageUrl,
+                                  id: productData.items[index].id,
+                                ),
+                                Divider(),
+                              ],
+                            )),
                   ),
+                ),
+              ),
       ),
     );
   }
